@@ -1,9 +1,9 @@
 package kiosk01;
 
 public class MenuItem {
-    String name;
-    String price;
-    String description;
+    private String name;
+    private String price;
+    private String description;
 
     // 객체 생성
     public MenuItem(String name, String price, String description) {
