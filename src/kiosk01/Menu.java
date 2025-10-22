@@ -12,11 +12,6 @@ public class Menu {
         this.category = category;
     }
 
-    // 읽기 전용
-    public List<MenuItem> getItems() {
-        return Collections.unmodifiableList(items);
-    }
-
     // 메뉴 추가
     public void addItem(MenuItem item) {
         items.add(item);
@@ -35,9 +30,6 @@ public class Menu {
     // getter/setter
     public String getCategory() {
         return category;
-    }
-    public void setCategory(String category) {
-        this.category = category;
     }
 
     // 메뉴 출력 메서드
