@@ -12,28 +12,6 @@ public class MenuItem {
         this.description = description;
     }
 
-    // getter/setter
-    public String getName() {
-        return name;
-    }
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPrice() {
-        return price;
-    }
-    public void setPrice(String price) {
-        this.price = price;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     // 출력용 포맷 지정
     @Override
     public String toString() {
