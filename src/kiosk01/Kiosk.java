@@ -4,11 +4,10 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Kiosk {
-    private List<MenuItem> menuItems;
+    public List<Menu> menus;
 
-    // 생성자를 통해 menuItems 값 할당
-    public Kiosk(List<MenuItem> menuItems) {
-        this.menuItems = menuItems;
+    public Kiosk(List<Menu> menus) {
+        this.menus = menus;
     }
 
     // start() 메서드
@@ -17,23 +16,37 @@ public class Kiosk {
 
         while (true) {
 
-            // MenuItem 출력
-            System.out.println("[ SHAKESHACK MENU ]");
-            for (int i = 0; i < menuItems.size(); i++) {
-                System.out.printf("%d. %s%n", (i + 1), menuItems.get(i));
+            // 카테고리 출력
+            System.out.println("[ MAIN MENU ]");
+            for (int i = 0; i < menus.size(); i++) {
+                System.out.printf("%d. %s%n", (i + 1), menus.get(i).category);
             }
-            System.out.println("0. 종료             | 종료");
+            System.out.println("0. 종료      | 종료");
 
-            // 숫자 입력
-            int choice = sc.nextInt();
+            // 카테고리 입력
+            int menuChoice = sc.nextInt();
 
-            // 입력 받은 숫자에 따른 처리
-            if (choice == 0) {
-                System.out.println("\n프로그램을 종료합니다.");
+            if (menuChoice == 0) {
+                System.out.println("프로그램을 종료합니다.");
                 System.exit(0);
-            } else if (choice >= 1 && choice <= menuItems.size()) {
-                MenuItem item = menuItems.get(choice - 1);
-                System.out.printf("%d. %s%n%n", choice, item);
+            } else if (menuChoice >= 1 && menuChoice <= menus.size()) {
+
+                // 메뉴 출력
+                Menu selectedMenu = menus.get(menuChoice - 1);
+                selectedMenu.printMenuItems();
+
+                // 메뉴 입력
+                int itemChoice = sc.nextInt();
+
+                if (itemChoice == 0) {
+                    System.out.println("\n[ MAIN MENU ] 로 돌아갑니다.");
+                    continue;
+                } else if (itemChoice >= 1 && itemChoice <= selectedMenu.menuItems.size()) {
+                    MenuItem item = selectedMenu.menuItems.get(itemChoice - 1);
+                    System.out.printf("%d. %s%n%n", itemChoice, item);
+                } else {
+                    System.out.println("다시 입력해 주세요.\n");
+                }
             } else {
                 System.out.println("다시 입력해 주세요.\n");
             }
