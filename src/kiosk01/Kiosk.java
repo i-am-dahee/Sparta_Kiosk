@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Kiosk {
-    public List<Menu> menus;
+    private List<Menu> menus;
 
     public Kiosk(List<Menu> menus) {
         this.menus = menus;
@@ -19,7 +19,7 @@ public class Kiosk {
             // 카테고리 출력
             System.out.println("[ MAIN MENU ]");
             for (int i = 0; i < menus.size(); i++) {
-                System.out.printf("%d. %s%n", (i + 1), menus.get(i).category);
+                System.out.printf("%d. %s%n", (i + 1), menus.get(i).getCategory());
             }
             System.out.println("0. 종료      | 종료");
 
@@ -39,10 +39,9 @@ public class Kiosk {
                 int itemChoice = sc.nextInt();
 
                 if (itemChoice == 0) {
-                    System.out.println("\n[ MAIN MENU ] 로 돌아갑니다.");
-                    continue;
-                } else if (itemChoice >= 1 && itemChoice <= selectedMenu.menuItems.size()) {
-                    MenuItem item = selectedMenu.menuItems.get(itemChoice - 1);
+                    System.out.println("[ MAIN MENU ] 로 돌아갑니다.\n");
+                } else if (itemChoice >= 1 && itemChoice <= selectedMenu.size()) {
+                    MenuItem item = selectedMenu.getItem(itemChoice - 1);
                     System.out.printf("%d. %s%n%n", itemChoice, item);
                 } else {
                     System.out.println("다시 입력해 주세요.\n");
