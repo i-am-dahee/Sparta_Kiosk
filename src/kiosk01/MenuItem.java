@@ -12,6 +12,14 @@ public class MenuItem {
         this.description = description;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
     // 출력용 포맷 지정
     @Override
     public String toString() {
