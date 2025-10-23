@@ -1,6 +1,5 @@
 package kiosk01;
 
-import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -41,20 +40,10 @@ public class Cart {
         System.out.println("장바구니가 비워졌습니다.\n");
     }
 
-    // 장바구니가 비었는지 확인
-    public boolean isEmpty() {
-        return cartItems.isEmpty();
-    }
-
     // 총 금액 계산
     public double getTotal() {
         return cartItems.values().stream()
                 .mapToDouble(CartItem::getLineTotal)
                 .sum();
-    }
-
-    // 장바구니 항목 전체 반환 (주문 기능에서 사용 예정)
-    public Collection<CartItem> getItems() {
-        return cartItems.values();
     }
 }

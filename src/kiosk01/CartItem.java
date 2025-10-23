@@ -1,20 +1,12 @@
 package kiosk01;
 
 public class CartItem {
-    private MenuItem item;
+    private final MenuItem item;
     private int quantity;
 
     public CartItem(MenuItem item, int quantity) {
         this.item = item;
         this.quantity = quantity;
-    }
-
-    public MenuItem getItem() {
-        return item;
-    }
-
-    public int getQuantity() {
-        return quantity;
     }
 
     // 수량 추가
@@ -34,7 +26,6 @@ public class CartItem {
     // 출력용 포맷 지정
     @Override
     public String toString() {
-        return String.format("%s x %d개 = W %.1f",
-                item.getName(), quantity, getLineTotal());
+        return String.format("%s x %d개 = W %.1f", item.getName(), quantity, getLineTotal());
     }
 }
