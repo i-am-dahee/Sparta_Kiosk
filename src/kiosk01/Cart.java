@@ -38,7 +38,7 @@ public class Cart {
     // 장바구니 비우기
     public void clear() {
         cartItems.clear();
-        System.out.println("장바구니가 비워졌습니다.");
+        System.out.println("장바구니가 비워졌습니다.\n");
     }
 
     // 장바구니가 비었는지 확인
