@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Menu {
-    private String category;
-    private List<MenuItem> items = new ArrayList<>();
+    private final String category;
+    private final List<MenuItem> items = new ArrayList<>();
 
     public Menu(String category) {
         this.category = category;
@@ -33,7 +33,7 @@ public class Menu {
 
     // 메뉴 출력 메서드
     public void printMenuItems() {
-        System.out.println("\n[ BURGERS MENU ]");
+        System.out.printf("%n[ %s MENU ]%n", category.toUpperCase());
         for (int i = 0; i < items.size(); i++) {
             System.out.printf("%d. %s%n", (i + 1), items.get(i));
         }

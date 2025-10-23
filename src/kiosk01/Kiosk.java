@@ -4,7 +4,8 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Kiosk {
-    private List<Menu> menus;
+    private final List<Menu> menus;
+    private final Cart cart = new Cart();
 
     public Kiosk(List<Menu> menus) {
         this.menus = menus;
@@ -28,23 +29,69 @@ public class Kiosk {
 
             if (menuChoice == 0) {
                 System.out.println("프로그램을 종료합니다.");
+                sc.close();
                 System.exit(0);
+
             } else if (menuChoice >= 1 && menuChoice <= menus.size()) {
 
-                // 메뉴 출력
                 Menu selectedMenu = menus.get(menuChoice - 1);
-                selectedMenu.printMenuItems();
 
-                // 메뉴 입력
-                int itemChoice = sc.nextInt();
+                // 세부 메뉴 반복 선택
+                while (true) {
 
-                if (itemChoice == 0) {
-                    System.out.println("[ MAIN MENU ] 로 돌아갑니다.\n");
-                } else if (itemChoice >= 1 && itemChoice <= selectedMenu.size()) {
-                    MenuItem item = selectedMenu.getItem(itemChoice - 1);
-                    System.out.printf("%d. %s%n%n", itemChoice, item);
-                } else {
-                    System.out.println("다시 입력해 주세요.\n");
+                    // 메뉴 출력
+                    selectedMenu.printMenuItems();
+
+                    // 메뉴 입력
+                    int itemChoice = sc.nextInt();
+
+                    if (itemChoice == 0) {
+                        System.out.println("[ MAIN MENU ] 로 돌아갑니다.\n");
+                        break;
+
+                    } else if (itemChoice >= 1 && itemChoice <= selectedMenu.size()) {
+
+                        // 선택한 메뉴 출력
+                        MenuItem item = selectedMenu.getItem(itemChoice - 1);
+                        System.out.printf("%d. %s%n%n", itemChoice, item);
+
+                        // 장바구니 기능
+                        System.out.println("""
+                                장바구니에 추가할까요?
+                                1. 확인        2. 취소""");
+                        int confirm = sc.nextInt();
+
+                        if (confirm == 1) {
+                            cart.addItem(item, 1);
+                            cart.printCart();
+
+                            // 주문 기능
+                            System.out.println("""
+                                    지금 주문하시겠습니까?
+                                    1. 주문      2. 계속 담기""");
+                            int next = sc.nextInt();
+
+                            if (next == 1) {
+                                double total = cart.getTotal();
+                                Order order = new Order("ORD-" + System.currentTimeMillis(), total);
+                                order.markPaid();
+                                System.out.printf("주문이 완료되었습니다. 금액은 W %.1f 입니다.%n%n", order.getTotal());
+                                cart.clear();
+                                break;
+                            } else if (next == 2) {
+                                System.out.println("[ MAIN MENU ] 로 돌아갑니다.\n");
+                                break;
+                            } else {
+                                System.out.println("유효하지 않은 선택입니다. 이전으로 돌아갑니다.\n");
+                            }
+                        } else if (confirm == 2) {
+                            System.out.println("추가를 취소했습니다.\n");
+                        } else {
+                            System.out.println("유효하지 않은 선택입니다. 처음으로 돌아갑니다.\n");
+                        }
+                    } else {
+                        System.out.println("다시 입력해 주세요.\n");
+                    }
                 }
             } else {
                 System.out.println("다시 입력해 주세요.\n");
