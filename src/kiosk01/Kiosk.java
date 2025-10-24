@@ -107,7 +107,6 @@ public class Kiosk {
                                     } else {
                                         System.out.println(itemName + "은 장바구니에 없는 항목입니다.");
                                     }
-                                    continue;
                                 } else {
                                     System.out.println("유효하지 않은 선택입니다. 이전으로 돌아갑니다.\n");
                                 }
