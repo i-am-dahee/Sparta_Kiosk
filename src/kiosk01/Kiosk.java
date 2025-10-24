@@ -2,6 +2,7 @@ package kiosk01;
 
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.IntStream;
 
 public class Kiosk {
     private final List<Menu> menus;
@@ -19,9 +20,8 @@ public class Kiosk {
 
             // 카테고리 출력
             System.out.println("[ MAIN MENU ]");
-            for (int i = 0; i < menus.size(); i++) {
-                System.out.printf("%d. %s%n", (i + 1), menus.get(i).getCategory());
-            }
+            IntStream.range(0, menus.size())
+                    .forEach(i -> System.out.printf("%d. %s%n", i + 1, menus.get(i).getCategory()));
             System.out.println("0. 종료      | 종료");
 
             // 카테고리 입력
@@ -63,38 +63,54 @@ public class Kiosk {
 
                         if (confirm == 1) {
                             cart.addItem(item, 1);
-                            cart.printCart();
 
-                            // 주문 기능
-                            System.out.println("""
-                                    지금 주문하시겠습니까?
-                                    1. 주문      2. 계속 담기""");
-                            int next = sc.nextInt();
+                            while (true) {
+                                cart.printCart();
 
-                            if (next == 1) {
-                                // 할인 기능
-                                Discount discount = new Discount();
+                                // 주문 기능
                                 System.out.println("""
-                                        할인 정보를 입력해주세요.
-                                        1. 국가유공자 : 10%
-                                        2. 군인     :  5%
-                                        3. 학생     :  3%
-                                        4. 일반     :  0%""");
-                                int selectedType = sc.nextInt();
+                                        지금 주문하시겠습니까?
+                                        1. 주문      2. 계속 담기      3. 담은 메뉴 삭제""");
+                                int next = sc.nextInt();
 
-                                double total = cart.getTotal();
-                                double discountPrice = discount.getDiscount(total, selectedType);
+                                if (next == 1) {
+                                    // 할인 기능
+                                    Discount discount = new Discount();
+                                    System.out.println("""
+                                            \n할인 정보를 입력해주세요.
+                                            1. 국가유공자 : 10%
+                                            2. 군인     :  5%
+                                            3. 학생     :  3%
+                                            4. 일반     :  0%""");
+                                    int selectedType = sc.nextInt();
 
-                                Order order = new Order("ORD-" + System.currentTimeMillis(), discountPrice);
-                                order.markPaid();
-                                System.out.printf("주문이 완료되었습니다. 금액은 W %.1f 입니다.%n%n", discountPrice);
-                                cart.clear();
-                                break;
-                            } else if (next == 2) {
-                                System.out.println("[ MAIN MENU ] 로 돌아갑니다.\n");
-                                break;
-                            } else {
-                                System.out.println("유효하지 않은 선택입니다. 이전으로 돌아갑니다.\n");
+                                    double total = cart.getTotal();
+                                    double discountPrice = discount.getDiscount(total, selectedType);
+
+                                    Order order = new Order("ORD-" + System.currentTimeMillis(), discountPrice);
+                                    order.markPaid();
+                                    System.out.printf("주문이 완료되었습니다. 금액은 W %.1f 입니다.%n%n", discountPrice);
+                                    cart.clear();
+                                    break;
+                                } else if (next == 2) {
+                                    System.out.println("이전으로 돌아갑니다.\n");
+                                    break;
+                                } else if (next == 3) {
+                                    System.out.println("\n삭제하실 메뉴 이름을 입력하세요.");
+                                    String itemName = sc.next();
+                                    sc.nextLine();
+
+                                    boolean removed = cart.removeItem(itemName);
+
+                                    if (removed) {
+                                        System.out.println(itemName + " 1개가 장바구니에서 삭제되었습니다.");
+                                    } else {
+                                        System.out.println(itemName + "은 장바구니에 없는 항목입니다.");
+                                    }
+                                    continue;
+                                } else {
+                                    System.out.println("유효하지 않은 선택입니다. 이전으로 돌아갑니다.\n");
+                                }
                             }
                         } else if (confirm == 2) {
                             System.out.println("추가를 취소했습니다.\n");

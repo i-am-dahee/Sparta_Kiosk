@@ -2,6 +2,7 @@ package kiosk01;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class Menu {
     private final String category;
@@ -34,9 +35,8 @@ public class Menu {
     // 메뉴 출력 메서드
     public void printMenuItems() {
         System.out.printf("%n[ %s MENU ]%n", category.toUpperCase());
-        for (int i = 0; i < items.size(); i++) {
-            System.out.printf("%d. %s%n", (i + 1), items.get(i));
-        }
+        IntStream.range(0, items.size())
+                .forEach(i -> System.out.printf("%d. %s%n", i + 1, items.get(i)));
         System.out.println("0. 뒤로가기");
     }
 }

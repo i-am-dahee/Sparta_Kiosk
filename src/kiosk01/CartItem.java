@@ -16,6 +16,17 @@ public class CartItem {
         }
     }
 
+    // 수량 감소
+    public void decreaseQuantity(int amount) {
+        if (amount > 0) {
+            this.quantity -= amount;
+        }
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
     // 개별 항목 금액 계산
     public double getLineTotal() {
         String priceText = item.getPrice().replaceAll("[^\\d.]", ""); // 숫자만
