@@ -46,7 +46,7 @@ public class Kiosk {
                     int selectedItem = sc.nextInt();
 
                     if (selectedItem == 0) {
-                        System.out.println("[ MAIN MENU ] 로 돌아갑니다.\n");
+                        System.out.println("이전으로 돌아갑니다.\n");
                         break;
 
                     } else if (selectedItem >= 1 && selectedItem <= selectedMenu.size()) {
@@ -57,7 +57,7 @@ public class Kiosk {
 
                         // 장바구니 기능
                         System.out.println("""
-                                장바구니에 추가할까요?
+                                위 메뉴를 장바구니에 추가하시겠습니까?
                                 1. 확인        2. 취소""");
                         int confirm = sc.nextInt();
 
@@ -70,7 +70,9 @@ public class Kiosk {
                                 // 주문 기능
                                 System.out.println("""
                                         지금 주문하시겠습니까?
-                                        1. 주문      2. 계속 담기      3. 담은 메뉴 삭제""");
+                                        1. 주문      | 장바구니를 확인 후 주문합니다.
+                                        2. 계속 담기  | 진행 중인 주문을 취소합니다.
+                                        3. 메뉴 삭제  | 장바구니 내역을 삭제합니다.""");
                                 int next = sc.nextInt();
 
                                 if (next == 1) {
@@ -117,7 +119,7 @@ public class Kiosk {
                             System.out.println("유효하지 않은 선택입니다. 처음으로 돌아갑니다.\n");
                         }
                     } else {
-                        System.out.println("다시 입력해 주세요.\n");
+                        System.out.println("유효하지 않은 선택입니다.\n");
                     }
                 }
             } else {
