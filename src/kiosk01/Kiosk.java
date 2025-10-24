@@ -43,17 +43,17 @@ public class Kiosk {
                     selectedMenu.printMenuItems();
 
                     // 메뉴 입력
-                    int itemChoice = sc.nextInt();
+                    int selectedItem = sc.nextInt();
 
-                    if (itemChoice == 0) {
+                    if (selectedItem == 0) {
                         System.out.println("[ MAIN MENU ] 로 돌아갑니다.\n");
                         break;
 
-                    } else if (itemChoice >= 1 && itemChoice <= selectedMenu.size()) {
+                    } else if (selectedItem >= 1 && selectedItem <= selectedMenu.size()) {
 
                         // 선택한 메뉴 출력
-                        MenuItem item = selectedMenu.getItem(itemChoice - 1);
-                        System.out.printf("%d. %s%n%n", itemChoice, item);
+                        MenuItem item = selectedMenu.getItem(selectedItem - 1);
+                        System.out.printf("%d. %s%n%n", selectedItem, item);
 
                         // 장바구니 기능
                         System.out.println("""
@@ -72,10 +72,22 @@ public class Kiosk {
                             int next = sc.nextInt();
 
                             if (next == 1) {
+                                // 할인 기능
+                                Discount discount = new Discount();
+                                System.out.println("""
+                                        할인 정보를 입력해주세요.
+                                        1. 국가유공자 : 10%
+                                        2. 군인     :  5%
+                                        3. 학생     :  3%
+                                        4. 일반     :  0%""");
+                                int selectedType = sc.nextInt();
+
                                 double total = cart.getTotal();
-                                Order order = new Order("ORD-" + System.currentTimeMillis(), total);
+                                double discountPrice = discount.getDiscount(total, selectedType);
+
+                                Order order = new Order("ORD-" + System.currentTimeMillis(), discountPrice);
                                 order.markPaid();
-                                System.out.printf("주문이 완료되었습니다. 금액은 W %.1f 입니다.%n%n", order.getTotal());
+                                System.out.printf("주문이 완료되었습니다. 금액은 W %.1f 입니다.%n%n", discountPrice);
                                 cart.clear();
                                 break;
                             } else if (next == 2) {
