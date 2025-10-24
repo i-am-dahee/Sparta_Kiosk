@@ -25,7 +25,7 @@ public class Kiosk {
             System.out.println("0. 종료      | 종료");
 
             // 카테고리 입력
-            int menuChoice = sc.nextInt();
+            int menuChoice = InputHelper.inputInt(sc, "번호 입력: ");
 
             if (menuChoice == 0) {
                 System.out.println("프로그램을 종료합니다.");
@@ -43,7 +43,7 @@ public class Kiosk {
                     selectedMenu.printMenuItems();
 
                     // 메뉴 입력
-                    int selectedItem = sc.nextInt();
+                    int selectedItem = InputHelper.inputInt(sc, "번호 입력: ");
 
                     if (selectedItem == 0) {
                         System.out.println("이전으로 돌아갑니다.\n");
@@ -59,7 +59,7 @@ public class Kiosk {
                         System.out.println("""
                                 위 메뉴를 장바구니에 추가하시겠습니까?
                                 1. 확인        2. 취소""");
-                        int confirm = sc.nextInt();
+                        int confirm = InputHelper.inputInt(sc, "번호 입력: ");
 
                         if (confirm == 1) {
                             cart.addItem(item, 1);
@@ -73,7 +73,7 @@ public class Kiosk {
                                         1. 주문      | 장바구니를 확인 후 주문합니다.
                                         2. 계속 담기  | 진행 중인 주문을 취소합니다.
                                         3. 메뉴 삭제  | 장바구니 내역을 삭제합니다.""");
-                                int next = sc.nextInt();
+                                int next = InputHelper.inputInt(sc, "번호 입력: ");
 
                                 if (next == 1) {
                                     // 할인 기능
@@ -84,7 +84,7 @@ public class Kiosk {
                                             2. 군인     :  5%
                                             3. 학생     :  3%
                                             4. 일반     :  0%""");
-                                    int selectedType = sc.nextInt();
+                                    int selectedType = InputHelper.inputInt(sc, "번호 입력: ");
 
                                     double total = cart.getTotal();
                                     double discountPrice = discount.getDiscount(total, selectedType);
@@ -99,7 +99,7 @@ public class Kiosk {
                                     break;
                                 } else if (next == 3) {
                                     System.out.println("\n삭제하실 메뉴 이름을 입력하세요.");
-                                    String itemName = sc.next();
+                                    String itemName = InputHelper.inputString(sc, "메뉴명 입력: ");
                                     sc.nextLine();
 
                                     boolean removed = cart.removeItem(itemName);
@@ -110,20 +110,20 @@ public class Kiosk {
                                         System.out.println(itemName + "은 장바구니에 없는 항목입니다.");
                                     }
                                 } else {
-                                    System.out.println("유효하지 않은 선택입니다. 이전으로 돌아갑니다.\n");
+                                    System.out.println("유효하지 않은 선택입니다.\n");
                                 }
                             }
                         } else if (confirm == 2) {
                             System.out.println("추가를 취소했습니다.\n");
                         } else {
-                            System.out.println("유효하지 않은 선택입니다. 처음으로 돌아갑니다.\n");
+                            System.out.println("유효하지 않은 선택입니다.\n");
                         }
                     } else {
                         System.out.println("유효하지 않은 선택입니다.\n");
                     }
                 }
             } else {
-                System.out.println("다시 입력해 주세요.\n");
+                System.out.println("유효하지 않은 선택입니다.\n");
             }
         }
     }
