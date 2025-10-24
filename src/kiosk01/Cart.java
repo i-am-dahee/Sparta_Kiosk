@@ -34,10 +34,10 @@ public class Cart {
         System.out.printf("총 금액: W %.1f%n%n", total);
     }
 
-    // 장바구니 비우기
+    // 장바구니 초기화
     public void clear() {
         cartItems.clear();
-        System.out.println("장바구니가 비워졌습니다.\n");
+        System.out.println("장바구니가 초기화 되었습니다.");
     }
 
     // 총 금액 계산
@@ -45,5 +45,31 @@ public class Cart {
         return cartItems.values().stream()
                 .mapToDouble(CartItem::getLineTotal)
                 .sum();
+    }
+
+    // 장바구니 삭제
+    public boolean removeItem(String itemName) {
+        if (itemName == null || itemName.isBlank()) return false;
+
+        String target = itemName.trim();
+        String matchedKey = null;
+
+        for (String key : cartItems.keySet()) {
+            if (key.equalsIgnoreCase(target)) {
+                matchedKey = key;
+                break;
+            }
+        }
+
+        if (matchedKey == null) return false;
+
+        CartItem cartItem = cartItems.get(matchedKey);
+        cartItem.decreaseQuantity(1);
+
+        if (cartItem.getQuantity() <= 0) {
+            cartItems.remove(matchedKey);
+        }
+
+        return true;
     }
 }
